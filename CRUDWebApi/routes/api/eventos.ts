@@ -10,8 +10,8 @@ router.get("/listar", wrap(async (req: express.Request, res: express.Response) =
 }));
 
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-	let idCandidato = parseInt(req.query["idCandidato"]);
-	res.json(isNaN(idCandidato) ? null : await Eventos.obter(idCandidato));
+	let idEven = parseInt(req.query["idEven"]);
+    res.json(isNaN(idEven) ? null : await Eventos.obter(idEven));
 }));
 
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
@@ -30,16 +30,15 @@ router.post("/criar", wrap(async (req: express.Request, res: express.Response) =
 		res.json("Dados inválidos");
 	}
 
-	// O if/else acima ficaria assim com o jsonRes: jsonRes(res, 400, c ? await Curso.criar(c) : "Dados inválidos");
 }));
 
 router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-	let c = req.body as Eventos;
-	if (c)
-		c.idCandidato = parseInt(req.body.id);
+	let e = req.body as Eventos;
+    if (e)
+        e.idEven = parseInt(req.body.id);
 
-	if (c && !isNaN(c.idCandidato)) {
-		let erro = await Eventos.alterar(c);
+    if (e && !isNaN(e.idEven)) {
+		let erro = await Eventos.alterar(e);
 		if (erro) {
 			res.statusCode = 400;
 			res.json(erro);
@@ -51,14 +50,13 @@ router.post("/alterar", wrap(async (req: express.Request, res: express.Response)
 		res.json("Dados inválidos");
 	}
 
-	// O if/else acima ficaria assim com o jsonRes: jsonRes(res, 400, (c && !isNaN(c.id)) ? await Curso.alterar(c) : "Dados inválidos");
 }));
 
 router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
-	let idCandidato = parseInt(req.query["idCandidato"]);
+    let idEven = parseInt(req.query["idEven"]);
 
-	if (!isNaN(idCandidato)) {
-		let erro = await Eventos.excluir(idCandidato);
+    if (!isNaN(idEven)) {
+        let erro = await Eventos.excluir(idEven);
 		if (erro) {
 			res.statusCode = 400;
 			res.json(erro);
@@ -69,8 +67,6 @@ router.get("/excluir", wrap(async (req: express.Request, res: express.Response) 
 		res.statusCode = 400;
 		res.json("Dados inválidos");
 	}
-
-	// O if/else acima ficaria assim com o jsonRes: jsonRes(res, 400, !isNaN(id) ? await Curso.excluir(id) : "Dados inválidos");
 }));
 
 export = router;
