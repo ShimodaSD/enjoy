@@ -41,8 +41,12 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="infra\sql.ts" />
     <TypeScriptCompile Include="models\anfitriao.ts" />
+    <TypeScriptCompile Include="models\atracao.ts" />
     <TypeScriptCompile Include="models\categoria.ts" />
     <TypeScriptCompile Include="models\convidado.ts" />
+    <TypeScriptCompile Include="models\endereco.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="models\eventos.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />

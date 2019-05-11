@@ -30,7 +30,7 @@ export = class Eventos {
         let lista: Eventos[] = null;
 
         await Sql.conectar(async (sql: Sql) => {
-            lista = await sql.query("select e.idEnde,e.nomeEnve, e.dataEven, e.avalEven, e.horaEven,e.idAnfi from eventos e,anfitria a where e.idAnfi = a.idAnfi order by idEven  asc") as Eventos[];
+            lista = await sql.query("select e.idEnde,e.nomeEnve, e.dataEven, e.avalEven, e.horaEven,e.idAnfi from eventos e,anfitria a,endereco en where e.idAnfi = a.idAnfi e.idEnde = en.idEnde order by idEven  asc") as Eventos[];
         });
 
         return (lista || []);
@@ -65,6 +65,8 @@ export = class Eventos {
         if (!e.dataEven)
             return "Data inválida!";
         return null;
+
+
     }
 
     public static async excluir(idEven: number): Promise<string> {

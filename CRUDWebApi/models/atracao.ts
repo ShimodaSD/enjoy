@@ -5,8 +5,8 @@ export = class Atracao {
 
     public idAtra: number
     public idEven: number
-    public nomAtra: String
-    public horAtra: String
+    public nomAtra: string
+    public horAtra: string
     public idCate: number
     public avaAtra: number
 
