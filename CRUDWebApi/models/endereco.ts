@@ -55,4 +55,25 @@ export = class Endereco {
         return res;
     }
 
+
+
+    public static async alterar(e: Endereco): Promise<string> {
+        let res: string;
+
+        await Sql.conectar(async (sql: Sql) => {
+            try {
+                await sql.query("update endereco set latEnde,lngEnde where idEnde=?", [e.latEnde, e.lngEnde, e.idEnde]);
+                if (!sql.linhasAfetadas)
+                    res = "Endereço inexistente";
+            } catch (e) {
+                if (e.code && e.code === "ER_DUP_ENTRY")
+                    res = `O Endereço "${e.idEnde}" já existe`;
+                else
+                    throw e;
+            }
+        });
+
+        return res;
+    }
+
 }

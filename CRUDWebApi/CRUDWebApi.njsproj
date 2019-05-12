@@ -50,7 +50,17 @@
     <TypeScriptCompile Include="models\eventos.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
+    <TypeScriptCompile Include="routes\api\anfitriao.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="routes\api\atracao.ts" />
+    <TypeScriptCompile Include="routes\api\categoria.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="routes\api\convidado.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="routes\api\endereco.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\api\eventos.ts" />
