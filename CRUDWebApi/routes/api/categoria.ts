@@ -8,3 +8,5 @@ const router = express.Router();
 router.get("/listar", wrap(async (req: express.Request, res: express.Response) => {
     res.json(await Categoria.listar());
 }));
+
+export = router;

@@ -1,43 +1,27 @@
-﻿import Sql = require("../infra/sql");
-import converteData = require("../utils/converteData");
-
-export = class  Anfitriao {
-
-    public idAnfi: number
-    public nomAnfi: String
-    public mailAnfi: String
-    public cpfAnfi: String
-    public senAnfi: String
-    public idLoca: number
-
-
-
-    public static async criar(a: Anfitriao): Promise<string> {
-        let res: string;
-
-        await Sql.conectar(async (sql: Sql) => {
+"use strict";
+const Sql = require("../infra/sql");
+module.exports = class Anfitriao {
+    static async criar(a) {
+        let res;
+        await Sql.conectar(async (sql) => {
             try {
                 await sql.query("insert into anfitriao (nomAnfi, mailAnfi, cpfAnfi, senAnfi,idLoca) values (?, ?, ?, ?,?)", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.idLoca]);
-            } catch (e) {
+            }
+            catch (e) {
                 res = `Erro`;
-
             }
         });
-
         return res;
     }
-
-    public static async obter(mailAnfi: number): Promise<Anfitriao> {
-        let lista: Anfitriao[] = null;
-
-        await Sql.conectar(async (sql: Sql) => {
-            lista = await sql.query("select senAnfi from anfitriao where mailAnfi=?", [mailAnfi]) as Anfitriao[];;
+    static async obter(idAnfi) {
+        let lista = null;
+        await Sql.conectar(async (sql) => {
+            lista = await sql.query("select  nomAnfi, mailAnfi, cpfAnfi, senAnfi, from atracao where idAnfi=?", [idAnfi]);
+            ;
         });
-
         return ((lista && lista[0]) || null);
     }
-
-    public static validar(a: Anfitriao): string {
+    static validar(a) {
         a.nomAnfi = (a.nomAnfi || "").trim().toUpperCase();
         if (a.nomAnfi.length < 3 || a.nomAnfi.length > 50)
             return "Nome inválido";
@@ -48,39 +32,33 @@ export = class  Anfitriao {
             return "CPF inválido";
         return null;
     }
-
-    public static async alterar(a: Anfitriao): Promise<string> {
-        let res: string;
+    static async alterar(a) {
+        let res;
         if ((res = Anfitriao.validar(a)))
             return res;
-
-        await Sql.conectar(async (sql: Sql) => {
+        await Sql.conectar(async (sql) => {
             try {
                 await sql.query("update atracao set nomAnfi=?, mailAnfi=?, cpfAnfi=?, senAnfi=?  where idAnfi = ?", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.idAnfi]);
                 if (!sql.linhasAfetadas)
                     res = "Anfitriao inexistente";
-            } catch (a) {
+            }
+            catch (a) {
                 if (a.code && a.code === "ER_DUP_ENTRY")
                     res = `O Anfitriao "${a.nomAnfi}" já existe`;
                 else
                     throw a;
             }
         });
-
         return res;
     }
-
-    public static async excluir(idAnfi: number): Promise<string> {
-        let res: string = null;
-
-        await Sql.conectar(async (sql: Sql) => {
+    static async excluir(idAnfi) {
+        let res = null;
+        await Sql.conectar(async (sql) => {
             await sql.query("delete from anfitriao where idAnfi= ?", [idAnfi]);
             if (!sql.linhasAfetadas)
                 res = "Anfitrião inexistente";
         });
-
         return res;
     }
-
-
-}
+};
+//# sourceMappingURL=anfitriao.js.map

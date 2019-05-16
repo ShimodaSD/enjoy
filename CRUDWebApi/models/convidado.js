@@ -1,84 +1,65 @@
-﻿import Sql = require("../infra/sql");
-import converteData = require("../utils/converteData");
-
-export = class  Convidado {
-
-    public idConv: number
-    public nomeConv: string
-    public dtConv: string
-    public genConv: string
-    public mailConv: string
-    public senConv: string
-
-
-
-    public static async criar(c: Convidado): Promise<string> {
-        let res: string;
-
-        await Sql.conectar(async (sql: Sql) => {
+"use strict";
+const Sql = require("../infra/sql");
+const converteData = require("../utils/converteData");
+module.exports = class Convidado {
+    static async criar(c) {
+        let res;
+        await Sql.conectar(async (sql) => {
             try {
                 await sql.query("insert into convidado (nomeConv,dtConv,genConv,mailConv,senConv) values ( ?, ?, ?,?,?)", [c.nomeConv, c.dtConv, c.genConv, c.mailConv, c.senConv]);
-            } catch (e) {
+            }
+            catch (e) {
                 res = `Erro`;
-
             }
         });
-
         return res;
     }
-
-    public static async obter(idConv: number): Promise<Convidado> {
-        let lista: Convidado[] = null;
-
-        await Sql.conectar(async (sql: Sql) => {
-            lista = await sql.query("select nomeConv,date_format(c.dtconv,'%d/%m/%Y' ) dtConv,genConv,mailConv,senConv from convidado where  idConv = ?", [idConv]) as Convidado[];
+    static async obter(idConv) {
+        let lista = null;
+        await Sql.conectar(async (sql) => {
+            lista = await sql.query("select nomeConv,date_format(c.dtconv,'%d/%m/%Y' ) dtConv,genConv,mailConv,senConv from convidado where  idConv = ?", [idConv]);
         });
-
         return ((lista && lista[0]) || null);
     }
-
-    public static async excluir(idConv: number): Promise<string> {
-        let res: string = null;
-
-        await Sql.conectar(async (sql: Sql) => {
+    static async excluir(idConv) {
+        let res = null;
+        await Sql.conectar(async (sql) => {
             await sql.query("delete from convidado where idConv = ?", [idConv]);
             if (!sql.linhasAfetadas)
                 res = "Candidato inexistente";
         });
-
         return res;
     }
-
-    public static async alterar(c: Convidado): Promise<string> {
-        let res: string;
+    static async alterar(c) {
+        let res;
         if ((res = Convidado.validar(c)))
             return res;
-
-        await Sql.conectar(async (sql: Sql) => {
+        await Sql.conectar(async (sql) => {
             try {
                 await sql.query("update convidado nomeConv=?,dtConv=?,genConv=?,mailConv=?,senConv=? where idConv = ?", [c.nomeConv, c.dtConv, c.genConv, c.mailConv, c.senConv, c.idConv]);
                 if (!sql.linhasAfetadas)
                     res = "Convidado inexistente";
-            } catch (e) {
+            }
+            catch (e) {
                 if (e.code && e.code === "ER_DUP_ENTRY")
                     res = `O Convidado "${e.nomeConv}" já existe`;
                 else
                     throw e;
             }
         });
-
         return res;
     }
-    public static validar(c: Convidado): string {
+    static validar(c) {
         c.nomeConv = (c.nomeConv || "").trim().toUpperCase();
         if (c.nomeConv.length < 3 || c.nomeConv.length > 50)
             return "Nome inválido";
         c.dtConv = converteData(c.dtConv);
         if (!c.dtConv)
             return "Data inválida!";
-         c.mailConv = (c.mailConv || "").trim().toUpperCase();
+        c.mailConv = (c.mailConv || "").trim().toUpperCase();
         if (c.mailConv.length < 7)
             return "E-mail inválido";
         return null;
     }
-}
+};
+//# sourceMappingURL=convidado.js.map

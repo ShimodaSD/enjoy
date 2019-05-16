@@ -1,21 +1,21 @@
 ﻿import express = require("express");
 import wrap = require("express-async-error-wrapper");
 import jsonRes = require("../../utils/jsonRes");
-import Endereco = require("../../models/endereco");
+import Localidade = require("../../models/localidade");
 
 const router = express.Router();
 
 
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-    let idEnde = parseInt(req.query["idEven"]);
-    res.json(isNaN(idEnde) ? null : await Endereco.obter(idEnde));
+    let idLoca = parseInt(req.query["idLoca"]);
+    res.json(isNaN(idLoca) ? null : await Localidade.obter(idLoca));
 }));
 
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
-    let c = req.body as Endereco;
+    let c = req.body as Localidade;
 
     if (c) {
-        let erro = await Endereco.criar(c);
+        let erro = await Localidade.criar(c);
         if (erro) {
             res.statusCode = 400;
             res.json(erro);
@@ -30,12 +30,12 @@ router.post("/criar", wrap(async (req: express.Request, res: express.Response) =
 }));
 
 router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-    let e = req.body as Endereco;
+    let e = req.body as Localidade;
     if (e)
-        e.idEnde = parseInt(req.body.id);
+        e.idLoca = parseInt(req.body.id);
 
-    if (e && !isNaN(e.idEnde)) {
-        let erro = await Endereco.alterar(e);
+    if (e && !isNaN(e.idLoca)) {
+        let erro = await Localidade.alterar(e);
         if (erro) {
             res.statusCode = 400;
             res.json(erro);
@@ -50,10 +50,10 @@ router.post("/alterar", wrap(async (req: express.Request, res: express.Response)
 }));
 
 router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
-    let idEnde = parseInt(req.query["idEnde"]);
+    let idLoca = parseInt(req.query["idLoca"]);
 
-    if (!isNaN(idEnde)) {
-        let erro = await Endereco.excluir(idEnde);
+    if (!isNaN(idLoca)) {
+        let erro = await Localidade.excluir(idLoca);
         if (erro) {
             res.statusCode = 400;
             res.json(erro);
@@ -64,6 +64,14 @@ router.get("/excluir", wrap(async (req: express.Request, res: express.Response) 
         res.statusCode = 400;
         res.json("Dados inválidos");
     }
+}));
+
+router.get("/listar", wrap(async (req: express.Request, res: express.Response) => {
+    res.json(await Localidade.listar());
+}));
+
+router.get("/listarHoje", wrap(async (req: express.Request, res: express.Response) => {
+    res.json(await Localidade.listarHoje());
 }));
 
 export = router;

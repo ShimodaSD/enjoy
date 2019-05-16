@@ -7,8 +7,8 @@ const router = express.Router();
 
 
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-    let idAnfi = parseInt(req.query["idAnfi"]);
-    res.json(isNaN(idAnfi) ? null : await Anfitriao.obter(idAnfi));
+    let mailAnfi = parseInt(req.query["mailAnfi"]);
+    res.json(isNaN(mailAnfi) ? null : await Anfitriao.obter(mailAnfi));
 }));
 
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
