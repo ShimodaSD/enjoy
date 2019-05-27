@@ -6,7 +6,7 @@ import Eventos = require("../../models/eventos");
 const router = express.Router();
 
 router.get("/listar", wrap(async (req: express.Request, res: express.Response) => {
-	res.json(await Eventos.listar());
+    res.json(await Eventos.listar());
 }));
 
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {

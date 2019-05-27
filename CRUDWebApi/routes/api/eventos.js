@@ -4,7 +4,8 @@ const wrap = require("express-async-error-wrapper");
 const Eventos = require("../../models/eventos");
 const router = express.Router();
 router.get("/listar", wrap(async (req, res) => {
-    res.json(await Eventos.listar());
+    let dataEven = req.query["dataEven"];
+    res.json(!dataEven ? null : await Eventos.obter(dataEven));
 }));
 router.get("/obter", wrap(async (req, res) => {
     let idEven = parseInt(req.query["idEven"]);

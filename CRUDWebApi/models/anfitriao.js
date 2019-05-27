@@ -5,7 +5,7 @@ module.exports = class Anfitriao {
         let res;
         await Sql.conectar(async (sql) => {
             try {
-                await sql.query("insert into anfitriao (nomAnfi, mailAnfi, cpfAnfi, senAnfi,idLoca) values (?, ?, ?, ?,?)", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.idLoca]);
+                await sql.query("insert into anfitriao (nomAnfi, mailAnfi, cpfAnfi, senAnfi,latAnfi,lngAnfi) values (?, ?, ?, ?,?,?)", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.latAnfi, a.lngAnfi]);
             }
             catch (e) {
                 res = `Erro`;
@@ -13,10 +13,10 @@ module.exports = class Anfitriao {
         });
         return res;
     }
-    static async obter(idAnfi) {
+    static async obter(mailAnfi) {
         let lista = null;
         await Sql.conectar(async (sql) => {
-            lista = await sql.query("select  nomAnfi, mailAnfi, cpfAnfi, senAnfi, from atracao where idAnfi=?", [idAnfi]);
+            lista = await sql.query("select mailAnfi,senAnfi from anfitriao where mailAnfi=?", [mailAnfi]);
             ;
         });
         return ((lista && lista[0]) || null);

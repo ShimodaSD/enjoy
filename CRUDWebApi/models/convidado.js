@@ -14,10 +14,10 @@ module.exports = class Convidado {
         });
         return res;
     }
-    static async obter(idConv) {
+    static async obter(mailConv) {
         let lista = null;
         await Sql.conectar(async (sql) => {
-            lista = await sql.query("select nomeConv,date_format(c.dtconv,'%d/%m/%Y' ) dtConv,genConv,mailConv,senConv from convidado where  idConv = ?", [idConv]);
+            lista = await sql.query("select mailConv,senConv from convidado where  mailConv = ?", [mailConv]);
         });
         return ((lista && lista[0]) || null);
     }

@@ -59,7 +59,6 @@ app.use("/api/anfitriao", require("./routes/api/anfitriao"));
 app.use("/api/atracao", require("./routes/api/atracao"));
 app.use("/api/categoria", require("./routes/api/categoria"));
 app.use("/api/convidado", require("./routes/api/convidado"));
-app.use("/api/localidade", require("./routes/api/localidade"));
 app.use("/api/eventos", require("./routes/api/eventos"));
 // Depois de registrados todos os caminhos das rotas e seus
 // tratadores, registramos os tratadores que serão chamados

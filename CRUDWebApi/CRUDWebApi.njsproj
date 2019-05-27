@@ -44,9 +44,6 @@
     <TypeScriptCompile Include="models\atracao.ts" />
     <TypeScriptCompile Include="models\categoria.ts" />
     <TypeScriptCompile Include="models\convidado.ts" />
-    <TypeScriptCompile Include="models\localidade.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="models\eventos.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
@@ -58,9 +55,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\api\convidado.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="routes\api\localidade.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\api\eventos.ts" />

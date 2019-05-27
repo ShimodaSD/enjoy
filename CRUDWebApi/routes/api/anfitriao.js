@@ -4,8 +4,8 @@ const wrap = require("express-async-error-wrapper");
 const Anfitriao = require("../../models/anfitriao");
 const router = express.Router();
 router.get("/obter", wrap(async (req, res) => {
-    let idAnfi = parseInt(req.query["idAnfi"]);
-    res.json(isNaN(idAnfi) ? null : await Anfitriao.obter(idAnfi));
+    let mailAnfi = req.query["mailAnfi"];
+    res.json(!mailAnfi ? null : await Anfitriao.obter(mailAnfi));
 }));
 router.post("/criar", wrap(async (req, res) => {
     let c = req.body;

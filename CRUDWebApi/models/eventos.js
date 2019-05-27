@@ -6,7 +6,7 @@ module.exports = class Eventos {
         let res;
         await Sql.conectar(async (sql) => {
             try {
-                await sql.query("insert into eventos (idEnde,nomeEnve, dataEven, avalEven, horaEven,idAnfi) values (?, ?, ?, ?,?,?)", [e.idEnde, e.nomeEven, e.dataEven, e.avalEven, e.horaEven, e.idAnfi]);
+                await sql.query("insert into eventos (idEnde,nomeEnve, dataEven, avalEven, horaEven,idAnfi,latEven,lngEven) values (?, ?, ?, ?,?,?,?,?)", [e.idEnde, e.nomeEven, e.dataEven, e.avalEven, e.horaEven, e.idAnfi, e.latEven, e.lngEven]);
             }
             catch (e) {
                 res = `Erro`;
@@ -14,9 +14,10 @@ module.exports = class Eventos {
         });
         return res;
     }
-    static async listar() {
+    static async listar(dataEven) {
         let lista = null;
         await Sql.conectar(async (sql) => {
+            //lista = await sql.query("select latEven,lngEven,horaEven,dataEven,nomeEven from eventos where dataEven=? ", [dataEven]);
             lista = await sql.query("select e.idEnde,e.nomeEnve, e.dataEven, e.avalEven, e.horaEven,e.idAnfi from eventos e,anfitria a,endereco en where e.idAnfi = a.idAnfi e.idEnde = en.idEnde order by idEven  asc");
         });
         return (lista || []);

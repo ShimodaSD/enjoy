@@ -10,16 +10,17 @@ export = class Eventos {
     public avalEven: number
     public horaEven: string
     public idAnfi: number
+    public latEven: string
+    public lngEven: string
 
     public static async criar(e: Eventos): Promise<string> {
         let res: string;
 
         await Sql.conectar(async (sql: Sql) => {
             try {
-                await sql.query("insert into eventos (idEnde,nomeEnve, dataEven, avalEven, horaEven,idAnfi) values (?, ?, ?, ?,?,?)", [e.idEnde,e.nomeEven, e.dataEven, e.avalEven, e.horaEven, e.idAnfi]);
+                await sql.query("insert into eventos (idEnde,nomeEnve, dataEven, avalEven, horaEven,idAnfi,latEven,lngEven) values (?, ?, ?, ?,?,?,?,?)", [e.idEnde, e.nomeEven, e.dataEven, e.avalEven, e.horaEven, e.idAnfi, e.latEven, e.lngEven]);
             } catch (e) {
                 res = `Erro`;
-
             }
         });
 
@@ -28,8 +29,8 @@ export = class Eventos {
 
     public static async listar(): Promise<Eventos[]> {
         let lista: Eventos[] = null;
-
         await Sql.conectar(async (sql: Sql) => {
+            //lista = await sql.query("select latEven,lngEven,horaEven,dataEven,nomeEven from eventos where dataEven=? ", [dataEven]);
             lista = await sql.query("select e.idEnde,e.nomeEnve, e.dataEven, e.avalEven, e.horaEven,e.idAnfi from eventos e,anfitria a,endereco en where e.idAnfi = a.idAnfi e.idEnde = en.idEnde order by idEven  asc") as Eventos[];
         });
 

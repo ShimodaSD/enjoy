@@ -27,11 +27,11 @@ export = class  Convidado {
         return res;
     }
 
-    public static async obter(idConv: number): Promise<Convidado> {
+    public static async obter(mailConv: string): Promise<Convidado> {
         let lista: Convidado[] = null;
 
         await Sql.conectar(async (sql: Sql) => {
-            lista = await sql.query("select nomeConv,date_format(c.dtconv,'%d/%m/%Y' ) dtConv,genConv,mailConv,senConv from convidado where  idConv = ?", [idConv]) as Convidado[];
+            lista = await sql.query("select mailConv,senConv from convidado where  mailConv = ?", [mailConv]) as Convidado[];
         });
 
         return ((lista && lista[0]) || null);

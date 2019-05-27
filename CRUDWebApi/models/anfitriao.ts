@@ -4,11 +4,12 @@ import converteData = require("../utils/converteData");
 export = class  Anfitriao {
 
     public idAnfi: number
-    public nomAnfi: String
-    public mailAnfi: String
-    public cpfAnfi: String
-    public senAnfi: String
-    public idLoca: number
+    public nomAnfi: string
+    public mailAnfi: string
+    public cpfAnfi: string
+    public senAnfi: string   
+    public latAnfi: string
+    public lngAnfi: string
 
 
 
@@ -17,8 +18,8 @@ export = class  Anfitriao {
 
         await Sql.conectar(async (sql: Sql) => {
             try {
-                await sql.query("insert into anfitriao (nomAnfi, mailAnfi, cpfAnfi, senAnfi,idLoca) values (?, ?, ?, ?,?)", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.idLoca]);
-            } catch (e) {
+                await sql.query("insert into anfitriao (nomAnfi, mailAnfi, cpfAnfi, senAnfi,latAnfi,lngAnfi) values (?, ?, ?, ?,?,?)", [a.nomAnfi, a.mailAnfi, a.cpfAnfi, a.senAnfi, a.latAnfi, a.lngAnfi]);
+            } catch (e) {   
                 res = `Erro`;
 
             }
@@ -27,11 +28,11 @@ export = class  Anfitriao {
         return res;
     }
 
-    public static async obter(mailAnfi: number): Promise<Anfitriao> {
+    public static async obter(mailAnfi: string): Promise<Anfitriao> {
         let lista: Anfitriao[] = null;
 
         await Sql.conectar(async (sql: Sql) => {
-            lista = await sql.query("select senAnfi from anfitriao where mailAnfi=?", [mailAnfi]) as Anfitriao[];;
+            lista = await sql.query("select mailAnfi,senAnfi from anfitriao where mailAnfi=?", [mailAnfi]) as Anfitriao[];;
         });
 
         return ((lista && lista[0]) || null);

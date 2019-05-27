@@ -4,8 +4,8 @@ const wrap = require("express-async-error-wrapper");
 const Convidado = require("../../models/convidado");
 const router = express.Router();
 router.get("/obter", wrap(async (req, res) => {
-    let idEven = parseInt(req.query["idEven"]);
-    res.json(isNaN(idEven) ? null : await Convidado.obter(idEven));
+    let mailConv = req.query["mailConv"];
+    res.json(!mailConv ? null : await Convidado.obter(mailConv));
 }));
 router.post("/criar", wrap(async (req, res) => {
     let c = req.body;

@@ -7,10 +7,9 @@ const router = express.Router();
 
 
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-    let idEven = parseInt(req.query["idEven"]);
-    res.json(isNaN(idEven) ? null : await Convidado.obter(idEven));
+    let mailConv = req.query["mailConv"];
+    res.json(!mailConv ? null : await Convidado.obter(mailConv));
 }));
-
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
     let c = req.body as Convidado;
 
